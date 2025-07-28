@@ -14,5 +14,6 @@ type LeaderboardEntry struct {
 	gorm.Model
 	Leaderboard Leaderboard
 	LeaderboardID uint
+	UserID string
 	FlaggedMessageCount uint
 }
