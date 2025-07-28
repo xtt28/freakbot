@@ -21,8 +21,6 @@ func (h *Handler) MessageCreate(s *discordgo.Session, m *discordgo.MessageCreate
 		log.Println("could not classify message", err)
 		return
 	}
-
-	log.Println(m.Content)
 	
 	if flag {
 		log.Printf("user %s/guild %s :: flagged :: %s\n", m.Author.ID, m.GuildID, m.Content)
