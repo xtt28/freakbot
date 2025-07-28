@@ -13,6 +13,11 @@ var _ LeaderboardRepository = &gormLeaderboardRepository{}
 type gormConnection struct {
 	db *gorm.DB
 	leaderboardRepository LeaderboardRepository
+
+	// Redis? Memcached? What's that?
+	// The keys for the cache are formatted as leaderboard_id:user_id
+	// We first try to read the cache before reading from the DB
+	cache map[string]uint
 }
 
 func (c *gormConnection) LeaderboardRepository() LeaderboardRepository {
@@ -33,6 +38,14 @@ func NewGORMSQLiteConnection(dsn string) (*gormConnection, error) {
 
 type gormLeaderboardRepository struct {
 	db *gorm.DB
+}
+
+func (r *gormLeaderboardRepository) CreateLeaderboard(string) error {
+	return nil
+}
+
+func (r *gormLeaderboardRepository) GetLeaderboardID(string) (uint, error) {
+	return 0, nil
 }
 
 func (r *gormLeaderboardRepository) GetEntries(uint, uint, uint) ([]model.LeaderboardEntry, error) {

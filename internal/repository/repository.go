@@ -3,6 +3,10 @@ package repository
 import "github.com/xtt28/freakbot/internal/model"
 
 type LeaderboardRepository interface {
+	// CreateLeaderboard creates a leaderboard for the server with given ID.
+	CreateLeaderboard(string) error
+	// GetLeaderboardID gets the ID of the leaderboard for the given server.
+	GetLeaderboardID(string) (uint, error)
 	// GetLeaderboardEntries returns the given amount of leaderboard entries for
 	// the given guild, offset by the given count. The first parameter is the
 	// leaderboard ID, the second parameter is the amount of leaderboard entries
