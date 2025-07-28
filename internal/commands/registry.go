@@ -25,10 +25,15 @@ func (r *CommandRegistry) registerCommands() {
 			Name: "about",
 			Description: "Shows you information about " + manifest.Name,
 		},
+		{
+			Name: "freakerboard",
+			Description: "Shows you a list of the freakiest people in this server.",
+		},
 	}
 
 	r.handlerMap = map[string]func(*discordgo.Session, *discordgo.Interaction){
 		"about": r.About,
+		"freakerboard": r.Leaderboard,
 	}
 
 	for _, v := range r.commands {
