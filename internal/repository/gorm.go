@@ -71,7 +71,8 @@ func (r *gormLeaderboardRepository) GetEntries(id uint, count uint, offset uint)
 	ctx := context.Background()
 
 	entries, err := gorm.G[model.LeaderboardEntry](r.db).
-		Where("id = ?", id).
+		Where("leaderboard_id = ?", id).
+		Order("flagged_message_count DESC").
 		Limit(int(count)).
 		Offset(int(offset)).
 		Find(ctx)
