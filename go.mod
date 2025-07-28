@@ -3,6 +3,7 @@ module github.com/xtt28/freakbot
 go 1.24.4
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/openai/openai-go v1.11.1
 	gorm.io/driver/sqlite v1.6.0
 	gorm.io/gorm v1.30.1
