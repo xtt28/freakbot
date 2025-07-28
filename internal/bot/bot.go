@@ -7,6 +7,7 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/xtt28/freakbot/internal/classifier"
+	"github.com/xtt28/freakbot/internal/commands"
 	"github.com/xtt28/freakbot/internal/handler"
 	"github.com/xtt28/freakbot/internal/repository"
 )
@@ -16,6 +17,7 @@ type BotApp struct {
 	dbConn repository.Connection
 	classifierService classifier.ClassifierService
 	handler *handler.Handler
+	commandRegistry *commands.CommandRegistry
 }
 
 type BotAppParams struct {
@@ -25,9 +27,13 @@ type BotAppParams struct {
 }
 
 func (b *BotApp) ready(s *discordgo.Session, event *discordgo.Ready) {
-	b.handler = handler.NewHandler(b.dbConn, b.classifierService)
+	b.commandRegistry = commands.NewRegistry(b.discordSess, b.dbConn, b.classifierService)
+
+	log.Println("registering handlers")
+	b.handler = handler.NewHandler(b.dbConn, b.classifierService, b.commandRegistry)
 	b.discordSess.AddHandler(b.handler.GuildCreate)
 	b.discordSess.AddHandler(b.handler.MessageCreate)
+	b.discordSess.AddHandler(b.handler.InteractionCreate)
 
 	log.Println("bot is ready")
 
@@ -56,7 +62,7 @@ func New(params BotAppParams) (*BotApp, error) {
 	}
 	app.dbConn = conn
 
-	sess, err := discordgo.New(params.DiscordToken)
+	sess, err := discordgo.New("Bot " + params.DiscordToken)
 	if err != nil {
 		return nil, err
 	}
