@@ -10,10 +10,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		panic(err)
-	}
+	godotenv.Load()
 	
 	if len(os.Args) < 2 {
 		fmt.Fprintln(os.Stderr, "must include text argument to classify")
