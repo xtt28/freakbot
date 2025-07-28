@@ -35,8 +35,11 @@ func NewGORMSQLiteConnection(dsn string) (*gormConnection, error) {
 		return nil, err
 	}
 
+	db.AutoMigrate(&model.Leaderboard{})
+	db.AutoMigrate(&model.LeaderboardEntry{})
+
 	gormConn := &gormConnection{db: db}
-	gormConn.leaderboardRepository = &gormLeaderboardRepository{db: db}
+	gormConn.leaderboardRepository = &gormLeaderboardRepository{db: db, cache: map[string]uint{}}
 	
 	return gormConn, db.Error
 }
@@ -112,8 +115,8 @@ func (r *gormLeaderboardRepository) IncrementUserFlaggedMessages(boardID uint, u
 	newCount := entry.FlaggedMessageCount + 1
 	cacheKey := createCacheKey(boardID, userID)
 
+	r.cache[cacheKey] = newCount
 	if isNotFound {
-		r.cache[cacheKey] = newCount
 		return gorm.G[model.LeaderboardEntry](r.db).Create(ctx, &model.LeaderboardEntry{
 			LeaderboardID: boardID,
 			UserID: userID,
