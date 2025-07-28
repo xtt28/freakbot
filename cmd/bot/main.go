@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Panicln(err)
-	}
+	godotenv.Load()
 
 	b, err := bot.New(bot.BotAppParams{
 		DiscordToken: os.Getenv("DISCORD_TOKEN"),

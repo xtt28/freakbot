@@ -1,15 +1,16 @@
 # syntax = docker/dockerfile:1
 
 FROM golang:1.24.4-alpine AS build
-ARG CGO_ENABLED=0
+RUN apk add build-base
+ARG CGO_ENABLED=1
 WORKDIR /app
 
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-RUN go build ./cmd/bot
+RUN go build -o bot ./cmd/bot
 
-FROM scratch
+FROM alpine:latest
 COPY --from=build /app/bot /bot
 ENTRYPOINT ["/bot"]
