@@ -31,4 +31,5 @@ go.work.sum
 # .idea/
 # .vscode/
 
-data.sqlite3
+*.sqlite3
+*.db
