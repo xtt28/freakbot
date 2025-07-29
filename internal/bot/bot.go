@@ -13,17 +13,17 @@ import (
 )
 
 type BotApp struct {
-	discordSess *discordgo.Session
-	dbConn repository.Connection
+	discordSess       *discordgo.Session
+	dbConn            repository.Connection
 	classifierService classifier.ClassifierService
-	handler *handler.Handler
-	commandRegistry *commands.CommandRegistry
+	handler           *handler.Handler
+	commandRegistry   *commands.CommandRegistry
 }
 
 type BotAppParams struct {
 	DiscordToken string
-	OpenAIKey string
-	DatabaseDSN string
+	OpenAIKey    string
+	DatabaseDSN  string
 }
 
 func (b *BotApp) ready(s *discordgo.Session, event *discordgo.Ready) {

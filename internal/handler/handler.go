@@ -7,9 +7,9 @@ import (
 )
 
 type Handler struct {
-	dbConn repository.Connection
+	dbConn            repository.Connection
 	classifierService classifier.ClassifierService
-	commandRegistry *commands.CommandRegistry
+	commandRegistry   *commands.CommandRegistry
 }
 
 func NewHandler(

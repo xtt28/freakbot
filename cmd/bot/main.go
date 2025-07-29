@@ -13,8 +13,8 @@ func main() {
 
 	b, err := bot.New(bot.BotAppParams{
 		DiscordToken: os.Getenv("DISCORD_TOKEN"),
-		OpenAIKey: os.Getenv("OPENAI_API_KEY"),
-		DatabaseDSN: os.Getenv("DB_DSN"),
+		OpenAIKey:    os.Getenv("OPENAI_API_KEY"),
+		DatabaseDSN:  os.Getenv("DB_DSN"),
 	})
 
 	if err != nil {

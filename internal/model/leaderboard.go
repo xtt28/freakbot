@@ -12,8 +12,8 @@ type Leaderboard struct {
 // LeaderboardEntry represents a single entry in the per-guild leaderboard.
 type LeaderboardEntry struct {
 	gorm.Model
-	Leaderboard Leaderboard
-	LeaderboardID uint
-	UserID string
+	Leaderboard         Leaderboard
+	LeaderboardID       uint
+	UserID              string
 	FlaggedMessageCount uint
 }

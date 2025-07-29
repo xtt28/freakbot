@@ -10,11 +10,11 @@ import (
 )
 
 type CommandRegistry struct {
-	discordSess *discordgo.Session
-	dbConn repository.Connection
+	discordSess       *discordgo.Session
+	dbConn            repository.Connection
 	classifierService classifier.ClassifierService
-	commands []*discordgo.ApplicationCommand
-	handlerMap map[string]func(*discordgo.Session, *discordgo.Interaction)
+	commands          []*discordgo.ApplicationCommand
+	handlerMap        map[string]func(*discordgo.Session, *discordgo.Interaction)
 }
 
 func (r *CommandRegistry) registerCommands() {
@@ -22,17 +22,17 @@ func (r *CommandRegistry) registerCommands() {
 
 	r.commands = []*discordgo.ApplicationCommand{
 		{
-			Name: "about",
+			Name:        "about",
 			Description: "Shows you information about " + manifest.Name,
 		},
 		{
-			Name: "freakerboard",
+			Name:        "freakerboard",
 			Description: "Shows you a list of the freakiest people in this server.",
 		},
 	}
 
 	r.handlerMap = map[string]func(*discordgo.Session, *discordgo.Interaction){
-		"about": r.About,
+		"about":        r.About,
 		"freakerboard": r.Leaderboard,
 	}
 

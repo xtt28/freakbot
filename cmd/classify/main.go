@@ -11,7 +11,7 @@ import (
 
 func main() {
 	godotenv.Load()
-	
+
 	if len(os.Args) < 2 {
 		fmt.Fprintln(os.Stderr, "must include text argument to classify")
 		os.Exit(1)

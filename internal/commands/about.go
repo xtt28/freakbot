@@ -11,19 +11,19 @@ func (r *CommandRegistry) About(s *discordgo.Session, i *discordgo.Interaction) 
 		Data: &discordgo.InteractionResponseData{
 			Embeds: []*discordgo.MessageEmbed{
 				{
-					Title: "About this bot",
+					Title:       "About this bot",
 					Description: "Information as presented in the app manifest",
 					Fields: []*discordgo.MessageEmbedField{
 						{
-							Name: "Name",
+							Name:  "Name",
 							Value: manifest.Name,
 						},
 						{
-							Name: "GitHub URL",
+							Name:  "GitHub URL",
 							Value: manifest.GitHubURL,
 						},
 						{
-							Name: "Identifier",
+							Name:  "Identifier",
 							Value: manifest.Iden,
 						},
 					},

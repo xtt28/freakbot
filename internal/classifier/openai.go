@@ -30,7 +30,7 @@ func (s *OpenAIClassifierService) IsFlagged(message string) (bool, error) {
 		return false, errors.New("no results in moderation query")
 	}
 	result := res.Results[0]
-	
+
 	return result.Flagged, nil
 }
 

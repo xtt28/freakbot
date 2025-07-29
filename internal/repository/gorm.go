@@ -19,7 +19,7 @@ func createCacheKey(boardID uint, userID string) string {
 }
 
 type gormConnection struct {
-	db *gorm.DB
+	db                    *gorm.DB
 	leaderboardRepository LeaderboardRepository
 }
 
@@ -40,7 +40,7 @@ func NewGORMSQLiteConnection(dsn string) (*gormConnection, error) {
 
 	gormConn := &gormConnection{db: db}
 	gormConn.leaderboardRepository = &gormLeaderboardRepository{db: db, cache: map[string]uint{}}
-	
+
 	return gormConn, db.Error
 }
 
@@ -84,8 +84,8 @@ func (r *gormLeaderboardRepository) GetEntryByUser(boardID uint, userID string) 
 	cachedCount, ok := r.cache[cacheKey]
 	if ok {
 		return model.LeaderboardEntry{
-			LeaderboardID: boardID,
-			UserID: userID,
+			LeaderboardID:       boardID,
+			UserID:              userID,
 			FlaggedMessageCount: cachedCount,
 		}, nil
 	}
@@ -100,7 +100,7 @@ func (r *gormLeaderboardRepository) GetEntryByUser(boardID uint, userID string) 
 	if err == nil {
 		r.cache[cacheKey] = entry.FlaggedMessageCount
 	}
-	
+
 	return entry, err
 }
 
@@ -110,7 +110,7 @@ func (r *gormLeaderboardRepository) IncrementUserFlaggedMessages(boardID uint, u
 	if err != nil && !isNotFound {
 		return err
 	}
-	
+
 	ctx := context.Background()
 
 	newCount := entry.FlaggedMessageCount + 1
@@ -119,8 +119,8 @@ func (r *gormLeaderboardRepository) IncrementUserFlaggedMessages(boardID uint, u
 	r.cache[cacheKey] = newCount
 	if isNotFound {
 		return gorm.G[model.LeaderboardEntry](r.db).Create(ctx, &model.LeaderboardEntry{
-			LeaderboardID: boardID,
-			UserID: userID,
+			LeaderboardID:       boardID,
+			UserID:              userID,
 			FlaggedMessageCount: newCount,
 		})
 	} else {
