@@ -13,4 +13,5 @@ RUN go build -o bot ./cmd/bot
 
 FROM alpine:latest
 COPY --from=build /app/bot /bot
+RUN mkdir -p data
 ENTRYPOINT ["/bot"]
